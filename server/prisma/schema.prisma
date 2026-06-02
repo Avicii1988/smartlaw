@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  LAWYER
+  ASSISTANT
+}
+
+enum ClientType {
+  PRIVAT
+  FIRMA
+}
+
+enum Rechtsgebiet {
+  FAMILIENRECHT
+  ERBRECHT
+  ARBEITSRECHT
+  MIETRECHT
+  VERTRAGSRECHT
+  STRAFRECHT
+  GESELLSCHAFTSRECHT
+  IMMOBILIENRECHT
+}
+
+enum DossierStatus {
+  OFFEN
+  AKTIV
+  ABGESCHLOSSEN
+}
+
+enum InvoiceStatus {
+  ENTWURF
+  VERSENDET
+  BEZAHLT
+  UEBERFAELLIG
+}
+
+enum HonorarTyp {
+  PAUSCHAL
+  STUNDENBASIS
+  ERFOLGSHONORAR
+}
+
+enum SignaturStatus {
+  AUSSTEHEND
+  UNTERZEICHNET
+  ABGELEHNT
+}
+
+enum TaskStatus {
+  OFFEN
+  IN_BEARBEITUNG
+  ERLEDIGT
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  vorname      String
+  nachname     String
+  role         UserRole  @default(LAWYER)
+  stundenansatz Float    @default(250)
+  aktiv        Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  dossiers     Dossier[]
+  timeEntries  TimeEntry[]
+  tasks        Task[]
+  documents    Document[]
+  conversations AIConversation[]
+}
+
+model Client {
+  id        String     @id @default(uuid())
+  vorname   String
+  nachname  String
+  firma     String?
+  typ       ClientType @default(PRIVAT)
+  email     String
+  telefon   String?
+  strasse   String?
+  plz       String?
+  ort       String?
+  land      String     @default("Schweiz")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  dossiers  Dossier[]
+  invoices  Invoice[]
+}
+
+model Dossier {
+  id           String        @id @default(uuid())
+  titel        String
+  rechtsgebiet Rechtsgebiet
+  status       DossierStatus @default(OFFEN)
+  frist        DateTime?
+  notizen      String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  clientId     String
+  client       Client        @relation(fields: [clientId], references: [id])
+  anwaltId     String
+  anwalt       User          @relation(fields: [anwaltId], references: [id])
+
+  tasks        Task[]
+  timeEntries  TimeEntry[]
+  documents    Document[]
+  invoices     Invoice[]
+  honorarVereinbarung HonorarVereinbarung?
+  conversations AIConversation[]
+}
+
+model Task {
+  id           String     @id @default(uuid())
+  titel        String
+  beschreibung String?
+  status       TaskStatus @default(OFFEN)
+  faellig      DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  dossierId    String
+  dossier      Dossier    @relation(fields: [dossierId], references: [id], onDelete: Cascade)
+  assigneeId   String?
+  assignee     User?      @relation(fields: [assigneeId], references: [id])
+}
+
+model TimeEntry {
+  id           String   @id @default(uuid())
+  datum        DateTime
+  taetigkeit   String
+  dauer        Float
+  stundenansatz Float
+  verrechenbar Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  dossierId    String
+  dossier      Dossier  @relation(fields: [dossierId], references: [id])
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+
+  invoiceItems InvoiceItem[]
+}
+
+model Invoice {
+  id                 String        @id @default(uuid())
+  nummer             String        @unique
+  status             InvoiceStatus @default(ENTWURF)
+  ausstellungsdatum  DateTime      @default(now())
+  faelligkeitsdatum  DateTime
+  betrag             Float
+  mwst               Float         @default(7.7)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  dossierId          String
+  dossier            Dossier       @relation(fields: [dossierId], references: [id])
+  clientId           String
+  client             Client        @relation(fields: [clientId], references: [id])
+
+  items              InvoiceItem[]
+}
+
+model InvoiceItem {
+  id           String    @id @default(uuid())
+  beschreibung String
+  menge        Float
+  einheit      String    @default("h")
+  einzelpreis  Float
+  total        Float
+
+  invoiceId    String
+  invoice      Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  timeEntryId  String?
+  timeEntry    TimeEntry? @relation(fields: [timeEntryId], references: [id])
+}
+
+model Document {
+  id             String        @id @default(uuid())
+  name           String
+  typ            String
+  groesse        Int
+  version        Int           @default(1)
+  signaturStatus SignaturStatus @default(AUSSTEHEND)
+  path           String
+  createdAt      DateTime      @default(now())
+
+  dossierId      String
+  dossier        Dossier       @relation(fields: [dossierId], references: [id])
+  uploadedById   String
+  uploadedBy     User          @relation(fields: [uploadedById], references: [id])
+}
+
+model HonorarVereinbarung {
+  id           String     @id @default(uuid())
+  typ          HonorarTyp @default(STUNDENBASIS)
+  betrag       Float?
+  stundenansatz Float?
+  createdAt    DateTime   @default(now())
+
+  dossierId    String     @unique
+  dossier      Dossier    @relation(fields: [dossierId], references: [id])
+}
+
+model LegalPackage {
+  id           String       @id @default(uuid())
+  name         String
+  rechtsgebiet Rechtsgebiet
+  beschreibung String
+  aktiv        Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+
+  templates    PackageTemplate[]
+}
+
+model PackageTemplate {
+  id        String      @id @default(uuid())
+  name      String
+  inhalt    String
+  typ       String
+  createdAt DateTime    @default(now())
+
+  packageId String
+  package   LegalPackage @relation(fields: [packageId], references: [id])
+}
+
+model AIConversation {
+  id        String   @id @default(uuid())
+  messages  Json     @default("[]")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  dossierId String?
+  dossier   Dossier? @relation(fields: [dossierId], references: [id])
+}
