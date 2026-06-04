@@ -9,7 +9,7 @@ import { Badge } from '../components/ui/Badge';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { EmptyState } from '../components/ui/EmptyState';
 import api from '../lib/api';
-import { ClientDto, ClientType } from '@lexflow/shared';
+import { ClientDto, ClientType } from '@smartlaw/shared';
 import { clientTypeLabel } from '../lib/utils';
 
 function ClientForm({ initial, onSubmit, onCancel }: {

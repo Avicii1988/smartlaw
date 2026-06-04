@@ -4,31 +4,31 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Seeding LexFlow Demo-Daten...');
+  console.log('🌱 Seeding smartlaw Demo-Daten...');
 
   // Users (3 Anwälte)
-  const pw = await bcrypt.hash('lexflow123', 10);
+  const pw = await bcrypt.hash('smartlaw123', 10);
 
   const [admin, anwalt1, anwalt2, assistant] = await Promise.all([
     prisma.user.upsert({
-      where: { email: 'admin@lexflow.ch' },
+      where: { email: 'admin@smartlaw.ch' },
       update: {},
-      create: { email: 'admin@lexflow.ch', passwordHash: pw, vorname: 'Anna', nachname: 'Meier', role: 'ADMIN', stundenansatz: 350 },
+      create: { email: 'admin@smartlaw.ch', passwordHash: pw, vorname: 'Anna', nachname: 'Meier', role: 'ADMIN', stundenansatz: 350 },
     }),
     prisma.user.upsert({
-      where: { email: 'mueller@lexflow.ch' },
+      where: { email: 'mueller@smartlaw.ch' },
       update: {},
-      create: { email: 'mueller@lexflow.ch', passwordHash: pw, vorname: 'Thomas', nachname: 'Müller', role: 'LAWYER', stundenansatz: 300 },
+      create: { email: 'mueller@smartlaw.ch', passwordHash: pw, vorname: 'Thomas', nachname: 'Müller', role: 'LAWYER', stundenansatz: 300 },
     }),
     prisma.user.upsert({
-      where: { email: 'schneider@lexflow.ch' },
+      where: { email: 'schneider@smartlaw.ch' },
       update: {},
-      create: { email: 'schneider@lexflow.ch', passwordHash: pw, vorname: 'Sarah', nachname: 'Schneider', role: 'LAWYER', stundenansatz: 280 },
+      create: { email: 'schneider@smartlaw.ch', passwordHash: pw, vorname: 'Sarah', nachname: 'Schneider', role: 'LAWYER', stundenansatz: 280 },
     }),
     prisma.user.upsert({
-      where: { email: 'assistant@lexflow.ch' },
+      where: { email: 'assistant@smartlaw.ch' },
       update: {},
-      create: { email: 'assistant@lexflow.ch', passwordHash: pw, vorname: 'Marc', nachname: 'Weber', role: 'ASSISTANT', stundenansatz: 120 },
+      create: { email: 'assistant@smartlaw.ch', passwordHash: pw, vorname: 'Marc', nachname: 'Weber', role: 'ASSISTANT', stundenansatz: 120 },
     }),
   ]);
 
@@ -243,10 +243,10 @@ async function main() {
   console.log('✅ Demo-Daten erfolgreich erstellt!');
   console.log('');
   console.log('🔐 Login-Daten:');
-  console.log('  admin@lexflow.ch      / lexflow123  (Admin)');
-  console.log('  mueller@lexflow.ch    / lexflow123  (Anwalt)');
-  console.log('  schneider@lexflow.ch  / lexflow123  (Anwältin)');
-  console.log('  assistant@lexflow.ch  / lexflow123  (Assistent)');
+  console.log('  admin@smartlaw.ch      / smartlaw123  (Admin)');
+  console.log('  mueller@smartlaw.ch    / smartlaw123  (Anwalt)');
+  console.log('  schneider@smartlaw.ch  / smartlaw123  (Anwältin)');
+  console.log('  assistant@smartlaw.ch  / smartlaw123  (Assistent)');
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());

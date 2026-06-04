@@ -9,7 +9,7 @@ import { Topbar } from '../components/layout/Topbar';
 import { Badge } from '../components/ui/Badge';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import api from '../lib/api';
-import { DashboardKPIs } from '@lexflow/shared';
+import { DashboardKPIs } from '@smartlaw/shared';
 import {
   formatCHF, formatHours, formatDate,
   dossierStatusLabel, dossierStatusColor,

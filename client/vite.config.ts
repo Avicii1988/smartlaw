@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@lexflow/shared': path.resolve(__dirname, '../shared/src/index.ts'),
+      '@smartlaw/shared': path.resolve(__dirname, '../shared/src/index.ts'),
     },
   },
   server: {

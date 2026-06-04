@@ -27,7 +27,7 @@ export function Sidebar() {
           <Scale size={18} className="text-white" />
         </div>
         <div>
-          <div className="font-bold text-sm tracking-wide">LexFlow</div>
+          <div className="font-bold text-sm tracking-wide">smartlaw</div>
           <div className="text-[10px] text-white/50 uppercase tracking-widest">Kanzleisoftware</div>
         </div>
       </div>

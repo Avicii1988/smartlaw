@@ -9,7 +9,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Modal } from '../components/ui/Modal';
 import api from '../lib/api';
-import { DocumentDto, SignaturStatus } from '@lexflow/shared';
+import { DocumentDto, SignaturStatus } from '@smartlaw/shared';
 import { formatDate, signaturStatusLabel, signaturStatusColor } from '../lib/utils';
 
 export function DokumentePage() {

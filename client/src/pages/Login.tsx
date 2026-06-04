@@ -5,8 +5,8 @@ import { useAuthStore } from '../store/auth';
 import api from '../lib/api';
 
 export function LoginPage() {
-  const [email, setEmail] = useState('admin@lexflow.ch');
-  const [password, setPassword] = useState('lexflow123');
+  const [email, setEmail] = useState('admin@smartlaw.ch');
+  const [password, setPassword] = useState('smartlaw123');
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ export function LoginPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur rounded-2xl mb-4 border border-white/20">
             <Scale size={32} className="text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white">LexFlow</h1>
+          <h1 className="text-3xl font-bold text-white">smartlaw</h1>
           <p className="text-white/60 mt-1">Schweizer Kanzleisoftware</p>
         </div>
 
@@ -96,12 +96,12 @@ export function LoginPage() {
             <p className="text-white/40 text-xs text-center mb-3">Demo-Zugänge</p>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { email: 'admin@lexflow.ch', label: 'Admin' },
-                { email: 'mueller@lexflow.ch', label: 'Anwalt' },
+                { email: 'admin@smartlaw.ch', label: 'Admin' },
+                { email: 'mueller@smartlaw.ch', label: 'Anwalt' },
               ].map(({ email: e, label }) => (
                 <button
                   key={e}
-                  onClick={() => { setEmail(e); setPassword('lexflow123'); }}
+                  onClick={() => { setEmail(e); setPassword('smartlaw123'); }}
                   className="text-xs text-white/50 hover:text-white/80 bg-white/5 hover:bg-white/10 rounded-lg px-3 py-2 transition-colors text-left"
                 >
                   <div className="font-medium">{label}</div>

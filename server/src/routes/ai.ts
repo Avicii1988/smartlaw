@@ -11,7 +11,7 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 router.post('/chat', async (req: AuthRequest, res) => {
   const { messages, dossierId, conversationId } = req.body;
 
-  let systemContext = `Du bist ein erfahrener Schweizer Rechtsassistent für die Kanzlei-Management-Plattform LexFlow.
+  let systemContext = `Du bist ein erfahrener Schweizer Rechtsassistent für die Kanzlei-Management-Plattform smartlaw.
 Du hilfst Schweizer Anwälten bei ihrer täglichen Arbeit. Antworte auf Deutsch.
 Du kannst Schriftsätze verfassen, Dokumente zusammenfassen, nächste Schritte vorschlagen und Schweizer Rechtsfragen beantworten.
 Beziehe dich auf das Schweizer Recht (OR, ZGB, ZPO, StGB etc.) und zitiere relevante Gesetzesartikel.`;

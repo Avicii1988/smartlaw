@@ -9,7 +9,7 @@ import { Badge } from '../components/ui/Badge';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { EmptyState } from '../components/ui/EmptyState';
 import api from '../lib/api';
-import { DossierDto, Rechtsgebiet, DossierStatus } from '@lexflow/shared';
+import { DossierDto, Rechtsgebiet, DossierStatus } from '@smartlaw/shared';
 import {
   formatDate, dossierStatusColor, dossierStatusLabel,
   rechtsgebietLabel, rechtsgebietColor,

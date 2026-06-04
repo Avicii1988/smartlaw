@@ -1,4 +1,4 @@
-# LexFlow – Schweizer Kanzleisoftware
+# smartlaw – Schweizer Kanzleisoftware
 
 Eine moderne, KI-gestützte Kanzleiverwaltungsplattform für Schweizer Anwaltskanzleien.
 
@@ -49,7 +49,7 @@ npm install
 Bearbeiten Sie `server/.env`:
 
 ```env
-DATABASE_URL="postgresql://postgres:passwort@localhost:5432/lexflow"
+DATABASE_URL="postgresql://postgres:passwort@localhost:5432/smartlaw"
 JWT_SECRET="ihr-geheimer-schluessel"
 ANTHROPIC_API_KEY="sk-ant-..."
 PORT=3001
@@ -60,7 +60,7 @@ CLIENT_URL="http://localhost:5173"
 
 ```bash
 # Datenbank erstellen (PostgreSQL muss laufen)
-createdb lexflow
+createdb smartlaw
 
 # Schema deployen
 npm run db:push
@@ -81,10 +81,10 @@ npm run dev
 
 | Benutzer | E-Mail | Passwort | Rolle |
 |----------|--------|----------|-------|
-| Anna Meier | admin@lexflow.ch | lexflow123 | Admin |
-| Thomas Müller | mueller@lexflow.ch | lexflow123 | Anwalt |
-| Sarah Schneider | schneider@lexflow.ch | lexflow123 | Anwältin |
-| Marc Weber | assistant@lexflow.ch | lexflow123 | Assistent |
+| Anna Meier | admin@smartlaw.ch | smartlaw123 | Admin |
+| Thomas Müller | mueller@smartlaw.ch | smartlaw123 | Anwalt |
+| Sarah Schneider | schneider@smartlaw.ch | smartlaw123 | Anwältin |
+| Marc Weber | assistant@smartlaw.ch | smartlaw123 | Assistent |
 
 ## Demo-Daten
 

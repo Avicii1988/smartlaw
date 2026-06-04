@@ -1,4 +1,4 @@
-import { DossierStatus, InvoiceStatus, Rechtsgebiet, SignaturStatus, TaskStatus, ClientType, HonorarTyp } from '@lexflow/shared';
+import { DossierStatus, InvoiceStatus, Rechtsgebiet, SignaturStatus, TaskStatus, ClientType, HonorarTyp } from '@smartlaw/shared';
 import { format, isPast, isWithinInterval, addDays } from 'date-fns';
 import { de } from 'date-fns/locale';
 

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { UserRole } from '@lexflow/shared';
+import { UserRole } from '@smartlaw/shared';
 
 export interface AuthRequest extends Request {
   user?: { id: string; email: string; role: UserRole };

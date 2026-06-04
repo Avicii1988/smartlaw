@@ -16,7 +16,7 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@lexflow/shared": ["../shared/src/index.ts"]
+      "@smartlaw/shared": ["../shared/src/index.ts"]
     },
     "baseUrl": "."
   },

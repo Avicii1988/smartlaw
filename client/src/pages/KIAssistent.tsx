@@ -60,7 +60,7 @@ export function KIAssistentPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('lexflow_token')}`,
+          Authorization: `Bearer ${localStorage.getItem('smartlaw_token')}`,
         },
         body: JSON.stringify({ messages: newMessages, dossierId: dossierId || undefined, conversationId }),
       });

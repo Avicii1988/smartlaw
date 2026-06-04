@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "paths": {
-      "@lexflow/shared": ["../shared/src/index.ts"]
+      "@smartlaw/shared": ["../shared/src/index.ts"]
     },
     "baseUrl": "."
   },
