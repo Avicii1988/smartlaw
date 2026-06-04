@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "concurrently \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
     "build": "npm run build --workspace=server && npm run build --workspace=client",
+    "vercel-build": "npx prisma generate --schema=server/prisma/schema.prisma && npm run build --workspace=client",
     "start:prod": "node server/dist/index.js",
     "db:push": "npm run db:push --workspace=server",
     "db:seed": "npm run db:seed --workspace=server",
-    "db:studio": "npm run db:studio --workspace=server"
+    "db:studio": "npm run db:studio --workspace=server",
+    "postinstall": "npx prisma generate --schema=server/prisma/schema.prisma"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
