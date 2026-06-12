@@ -9,3 +9,6 @@ server/src/uploads/*
 !server/src/uploads/.gitkeep
 *.env.local
 .env.local
+
+.env
+server/.env
