@@ -1,4 +1,4 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "cd .. && npx prisma db push --schema=server/prisma/schema.prisma && cd client && npm run build",
   "outputDirectory": "dist"
 }
