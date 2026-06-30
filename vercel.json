@@ -1,9 +1,9 @@
 {
-  "buildCommand": "npx prisma generate --schema=server/prisma/schema.prisma && npx prisma db push --schema=server/prisma/schema.prisma --accept-data-loss && cd client && npm install && npm run build",
+  "buildCommand": "npx prisma generate --schema=server/prisma/schema.prisma && cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "functions": {
     "api/[...path].ts": {
-      "includeFiles": "server/**"
+      "includeFiles": ["server/**", "node_modules/.bin/prisma", "node_modules/.prisma/**", "node_modules/@prisma/**"]
     }
   },
   "rewrites": [
