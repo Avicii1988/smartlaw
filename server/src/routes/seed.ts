@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { execSync } from 'child_process';
-import path from 'path';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -11,17 +9,6 @@ router.post('/', async (req, res) => {
   const secret = req.headers['x-seed-secret'] || req.body?.secret;
   if (secret !== process.env.SEED_SECRET) {
     return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  // Push schema to DB at runtime (build server can't reach Supabase port 5432)
-  try {
-    const schemaPath = path.resolve(__dirname, '../../prisma/schema.prisma');
-    execSync(`npx prisma db push --schema="${schemaPath}" --accept-data-loss`, {
-      env: { ...process.env },
-      stdio: 'pipe',
-    });
-  } catch (e: any) {
-    return res.status(500).json({ error: 'prisma db push failed', detail: e.message });
   }
 
   const existing = await prisma.user.count();
