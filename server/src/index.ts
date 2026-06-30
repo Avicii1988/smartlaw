@@ -15,6 +15,7 @@ import documentRoutes from './routes/documents';
 import aiRoutes from './routes/ai';
 import packageRoutes from './routes/packages';
 import dashboardRoutes from './routes/dashboard';
+import seedRoutes from './routes/seed';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/packages', packageRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/seed', seedRoutes);
 
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err);
