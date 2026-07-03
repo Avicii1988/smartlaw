@@ -11,43 +11,53 @@ router.get('/kpis', async (req: AuthRequest, res) => {
   const today = new Date(now); today.setHours(0, 0, 0, 0);
   const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const [aktiveDossiers, timeEntriesMonth, offeneInvoices, pendentSignaturen, recentDossiers, todayEntries] =
-    await Promise.all([
-      prisma.dossier.count({ where: { status: 'AKTIV' } }),
-      prisma.timeEntry.findMany({
-        where: { datum: { gte: firstOfMonth } },
-        select: { dauer: true },
-      }),
-      prisma.invoice.findMany({
-        where: { status: { in: ['VERSENDET', 'UEBERFAELLIG'] } },
-        select: { betrag: true, mwst: true },
-      }),
-      prisma.document.count({ where: { signaturStatus: 'AUSSTEHEND' } }),
-      prisma.dossier.findMany({
-        take: 5,
-        orderBy: { updatedAt: 'desc' },
-        include: {
-          client: true,
-          anwalt: { select: { id: true, vorname: true, nachname: true, email: true, role: true, stundenansatz: true } },
-        },
-      }),
-      prisma.timeEntry.findMany({
-        where: { userId: req.user!.id, datum: { gte: today, lt: tomorrow } },
-        include: {
-          dossier: { include: { client: true } },
-          user: { select: { id: true, vorname: true, nachname: true, email: true, role: true, stundenansatz: true } },
-        },
-        orderBy: { datum: 'desc' },
-      }),
-    ]);
-
-  const erfassteStunden = timeEntriesMonth.reduce((sum, e) => sum + e.dauer, 0);
-  const offeneHonorare = offeneInvoices.reduce((sum, i) => sum + i.betrag * (1 + i.mwst / 100), 0);
-
-  res.json({
+  const [
     aktiveDossiers,
     erfassteStunden,
     offeneHonorare,
+    pendentSignaturen,
+    recentDossiers,
+    todayEntries,
+  ] = await Promise.all([
+    prisma.dossier.count({ where: { status: 'AKTIV' } }),
+
+    prisma.timeEntry.aggregate({
+      where: { datum: { gte: firstOfMonth } },
+      _sum: { dauer: true },
+    }),
+
+    prisma.invoice.findMany({
+      where: { status: { in: ['VERSENDET', 'UEBERFAELLIG'] } },
+      select: { betrag: true, mwst: true },
+    }),
+
+    prisma.document.count({ where: { signaturStatus: 'AUSSTEHEND' } }),
+
+    prisma.dossier.findMany({
+      take: 5,
+      orderBy: { updatedAt: 'desc' },
+      select: {
+        id: true, titel: true, rechtsgebiet: true, status: true, frist: true,
+        client: { select: { vorname: true, nachname: true, firma: true } },
+        anwalt: { select: { vorname: true, nachname: true } },
+      },
+    }),
+
+    prisma.timeEntry.findMany({
+      where: { userId: req.user!.id, datum: { gte: today, lt: tomorrow } },
+      select: {
+        id: true, taetigkeit: true, dauer: true,
+        dossier: { select: { titel: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 10,
+    }),
+  ]);
+
+  res.json({
+    aktiveDossiers,
+    erfassteStunden: erfassteStunden._sum.dauer ?? 0,
+    offeneHonorare: offeneHonorare.reduce((s, i) => s + i.betrag * (1 + i.mwst / 100), 0),
     pendentSignaturen,
     recentDossiers,
     todayTimeEntries: todayEntries,

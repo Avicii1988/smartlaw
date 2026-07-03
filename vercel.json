@@ -3,7 +3,9 @@
   "outputDirectory": "client/dist",
   "functions": {
     "api/[...path].ts": {
-      "includeFiles": "server/**"
+      "includeFiles": "server/**",
+      "maxDuration": 30,
+      "memory": 512
     }
   },
   "rewrites": [

@@ -39,17 +39,19 @@ export function DashboardPage() {
   const { data, isLoading, isError, refetch } = useQuery<DashboardKPIs>({
     queryKey: ['dashboard'],
     queryFn: () => api.get('/dashboard/kpis').then(r => r.data),
-    refetchInterval: 60000,
-    retry: 3,
-    retryDelay: 1500,
-    staleTime: 30000,
+    refetchInterval: 120000,
+    retry: 2,
+    retryDelay: 2000,
+    staleTime: 60000,
+    gcTime: 300000,
   });
 
   const { data: suggestions } = useQuery({
     queryKey: ['ai-suggestions'],
     queryFn: () => api.get('/ai/suggestions').then(r => r.data),
-    retry: 1,
-    staleTime: 60000,
+    retry: 0,
+    staleTime: 120000,
+    enabled: !!data, // erst laden wenn KPIs da sind
   });
 
   if (isLoading) return <Layout><Topbar title="Dashboard" /><LoadingSpinner /></Layout>;

@@ -5,7 +5,15 @@ import App from './App';
 import './index.css';
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { staleTime: 1000 * 60, retry: 1 } },
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 3,   // 3 Minuten Cache
+      gcTime: 1000 * 60 * 10,     // 10 Minuten im Speicher
+      retry: 1,
+      retryDelay: 2000,
+      refetchOnWindowFocus: false, // kein Reload bei Tab-Wechsel
+    },
+  },
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
