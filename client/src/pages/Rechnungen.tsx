@@ -118,14 +118,14 @@ export function RechnungenPage() {
     <Layout>
       <Topbar title="Rechnungen" subtitle={`${invoices?.length ?? 0} Rechnungen`} />
       <div className="p-4 md:p-6 space-y-4 md:space-y-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-4 gap-2">
           {(['ENTWURF', 'VERSENDET', 'BEZAHLT', 'UEBERFAELLIG'] as InvoiceStatus[]).map(s => {
             const count = invoices?.filter(i => i.status === s).length || 0;
             return (
               <button key={s} onClick={() => setFilterStatus(filterStatus === s ? '' : s)}
-                className={`card p-4 text-left transition-all ${filterStatus === s ? 'ring-2 ring-[#185FA5]' : 'hover:shadow-md'}`}>
+                className={`card p-2 md:p-4 text-left transition-all ${filterStatus === s ? 'ring-2 ring-[#185FA5]' : 'hover:shadow-md'}`}>
                 <p className="text-lg font-bold text-gray-900">{count}</p>
-                <Badge className={`${invoiceStatusColor[s]} mt-1`}>{invoiceStatusLabel[s]}</Badge>
+                <Badge className={`${invoiceStatusColor[s]} mt-1 text-xs`}>{invoiceStatusLabel[s]}</Badge>
               </button>
             );
           })}
@@ -143,7 +143,7 @@ export function RechnungenPage() {
           } />
         ) : (
           {/* Mobile cards */}
-          <div className="space-y-2 md:hidden">
+          <div className="space-y-2 sm:hidden">
             {invoices?.map((inv) => (
               <div key={inv.id} className="card p-4">
                 <div className="flex items-start justify-between gap-2">
@@ -170,7 +170,7 @@ export function RechnungenPage() {
             ))}
           </div>
           {/* Desktop table */}
-          <div className="card overflow-hidden hidden md:block">
+          <div className="card overflow-hidden hidden sm:block">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100">

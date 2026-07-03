@@ -153,16 +153,16 @@ export function LeistungenPage() {
 
         {/* Summary */}
         <div className="grid grid-cols-3 gap-4">
-          <div className="card p-4 text-center">
-            <p className="text-xl md:text-2xl font-bold text-gray-900">{formatHours(totalHours)}</p>
-            <p className="text-xs text-gray-400 mt-1">Total Stunden</p>
+          <div className="card p-3 md:p-4 text-center">
+            <p className="text-lg md:text-2xl font-bold text-gray-900 truncate">{formatHours(totalHours)}</p>
+            <p className="text-xs text-gray-400 mt-1">Total Std.</p>
           </div>
-          <div className="card p-4 text-center">
-            <p className="text-xl md:text-2xl font-bold text-[#185FA5]">{formatHours(billableHours)}</p>
-            <p className="text-xs text-gray-400 mt-1">Verrechenbar</p>
+          <div className="card p-3 md:p-4 text-center">
+            <p className="text-lg md:text-2xl font-bold text-[#185FA5] truncate">{formatHours(billableHours)}</p>
+            <p className="text-xs text-gray-400 mt-1">Verrechenb.</p>
           </div>
-          <div className="card p-4 text-center">
-            <p className="text-xl md:text-2xl font-bold text-green-600 truncate">{formatCHF(totalCHF)}</p>
+          <div className="card p-3 md:p-4 text-center">
+            <p className="text-lg md:text-2xl font-bold text-green-600 truncate">{formatCHF(totalCHF)}</p>
             <p className="text-xs text-gray-400 mt-1">Honorar total</p>
           </div>
         </div>
@@ -184,7 +184,7 @@ export function LeistungenPage() {
           } />
         ) : (
           {/* Mobile cards */}
-          <div className="space-y-2 md:hidden">
+          <div className="space-y-2 sm:hidden">
             {entries?.map((e: any) => (
               <div key={e.id} className="card p-4">
                 <div className="flex items-start justify-between gap-2">
@@ -206,7 +206,7 @@ export function LeistungenPage() {
             ))}
           </div>
           {/* Desktop table */}
-          <div className="card overflow-hidden hidden md:block">
+          <div className="card overflow-hidden hidden sm:block">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100">
