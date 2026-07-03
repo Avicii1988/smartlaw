@@ -21,15 +21,16 @@ function KPICard({ icon: Icon, label, value, sub, color }: {
   icon: any; label: string; value: string; sub?: string; color: string;
 }) {
   return (
-    <div className="card p-3 md:p-5 flex items-start gap-2 md:gap-4">
-      <div className={`w-8 h-8 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${color}`}>
-        <Icon size={18} />
+    <div className="card p-3 md:p-5">
+      <div className="flex items-center gap-1.5 mb-2">
+        <div className={`w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${color}`}>
+          <Icon size={13} className="md:hidden" />
+          <Icon size={16} className="hidden md:block" />
+        </div>
+        <p className="text-xs text-gray-500 font-medium leading-tight truncate">{label}</p>
       </div>
-      <div className="min-w-0 flex-1">
-        <p className="text-xs text-gray-500 font-medium leading-tight">{label}</p>
-        <p className="text-lg md:text-2xl font-bold text-gray-900 mt-0.5 truncate">{value}</p>
-        {sub && <p className="text-xs text-gray-400 mt-0.5 truncate">{sub}</p>}
-      </div>
+      <p className="text-xl md:text-2xl font-bold text-gray-900 truncate">{value}</p>
+      {sub && <p className="text-xs text-gray-400 mt-0.5 truncate">{sub}</p>}
     </div>
   );
 }
@@ -55,9 +56,9 @@ export function DashboardPage() {
         {/* KPI Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <KPICard icon={FolderOpen} label="Aktive Dossiers" value={String(data?.aktiveDossiers ?? 0)} color="bg-blue-50 text-blue-600" />
-          <KPICard icon={Clock} label="Stunden (Monat)" value={formatHours(data?.erfassteStunden ?? 0)} sub="erfasste Leist." color="bg-green-50 text-green-600" />
-          <KPICard icon={Banknote} label="Honorare offen" value={formatCHF(data?.offeneHonorare ?? 0)} sub="versendet + überfäll." color="bg-amber-50 text-amber-600" />
-          <KPICard icon={FileSignature} label="Pend. Signat." value={String(data?.pendentSignaturen ?? 0)} sub="Dokumente ausst." color="bg-purple-50 text-purple-600" />
+          <KPICard icon={Clock} label="Stunden (Monat)" value={formatHours(data?.erfassteStunden ?? 0)} sub="erfasste Leistungen" color="bg-green-50 text-green-600" />
+          <KPICard icon={Banknote} label="Offene Honorare" value={formatCHF(data?.offeneHonorare ?? 0)} sub="versendet + überfällig" color="bg-amber-50 text-amber-600" />
+          <KPICard icon={FileSignature} label="Pend. Signaturen" value={String(data?.pendentSignaturen ?? 0)} sub="Dokumente ausstehend" color="bg-purple-50 text-purple-600" />
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">

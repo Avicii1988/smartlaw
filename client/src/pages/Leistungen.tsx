@@ -183,7 +183,7 @@ export function LeistungenPage() {
             <button onClick={() => setModalOpen(true)} className="btn-primary">Leistung erfassen</button>
           } />
         ) : (
-          {/* Mobile cards */}
+          <>
           <div className="space-y-2 sm:hidden">
             {entries?.map((e: any) => (
               <div key={e.id} className="card p-4">
@@ -241,6 +241,7 @@ export function LeistungenPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
 

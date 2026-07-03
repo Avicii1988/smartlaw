@@ -131,10 +131,9 @@ export function RechnungenPage() {
           })}
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="text-sm text-gray-500">Offene Honorare: <span className="font-semibold text-amber-600">{formatCHF(totalOpen)}</span></div>
-          <div className="flex-1" />
-          <button onClick={() => setModalOpen(true)} className="btn-primary flex items-center gap-2 whitespace-nowrap"><Plus size={16} /> Rechnung erstellen</button>
+          <button onClick={() => setModalOpen(true)} className="btn-primary flex items-center justify-center gap-2 sm:ml-auto"><Plus size={16} /> Rechnung erstellen</button>
         </div>
 
         {isLoading ? <LoadingSpinner /> : invoices?.length === 0 ? (
@@ -142,7 +141,7 @@ export function RechnungenPage() {
             <button onClick={() => setModalOpen(true)} className="btn-primary">Rechnung erstellen</button>
           } />
         ) : (
-          {/* Mobile cards */}
+          <>
           <div className="space-y-2 sm:hidden">
             {invoices?.map((inv) => (
               <div key={inv.id} className="card p-4">
@@ -169,7 +168,6 @@ export function RechnungenPage() {
               </div>
             ))}
           </div>
-          {/* Desktop table */}
           <div className="card overflow-hidden hidden sm:block">
             <table className="w-full text-sm">
               <thead>
@@ -205,6 +203,7 @@ export function RechnungenPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
 
