@@ -65,8 +65,8 @@ export function DokumentePage() {
     <Layout>
       <Topbar title="Dokumente" subtitle="Dokumente und E-Signatur" />
       <div className="p-4 md:p-6 space-y-4 md:space-y-6">
-        <div className="flex items-center gap-3">
-          <select className="input w-64" value={dossierId} onChange={e => setDossierId(e.target.value)}>
+        <div className="flex flex-wrap items-center gap-3">
+          <select className="input w-full sm:w-64" value={dossierId} onChange={e => setDossierId(e.target.value)}>
             <option value="">Alle Dossiers</option>
             {dossiers?.map((d: any) => <option key={d.id} value={d.id}>{d.titel}</option>)}
           </select>
@@ -75,9 +75,9 @@ export function DokumentePage() {
           <button
             onClick={() => fileRef.current?.click()}
             disabled={uploading}
-            className="btn-primary flex items-center gap-2"
+            className="btn-primary flex items-center gap-2 whitespace-nowrap"
           >
-            <Upload size={16} /> {uploading ? 'Wird hochgeladen...' : 'Dokument hochladen'}
+            <Upload size={16} /> {uploading ? 'Lädt hoch...' : 'Dokument hochladen'}
           </button>
         </div>
 

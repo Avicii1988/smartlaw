@@ -118,7 +118,7 @@ export function RechnungenPage() {
     <Layout>
       <Topbar title="Rechnungen" subtitle={`${invoices?.length ?? 0} Rechnungen`} />
       <div className="p-4 md:p-6 space-y-4 md:space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {(['ENTWURF', 'VERSENDET', 'BEZAHLT', 'UEBERFAELLIG'] as InvoiceStatus[]).map(s => {
             const count = invoices?.filter(i => i.status === s).length || 0;
             return (
@@ -131,10 +131,10 @@ export function RechnungenPage() {
           })}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="text-sm text-gray-500">Offene Honorare: <span className="font-semibold text-amber-600">{formatCHF(totalOpen)}</span></div>
           <div className="flex-1" />
-          <button onClick={() => setModalOpen(true)} className="btn-primary flex items-center gap-2"><Plus size={16} /> Rechnung erstellen</button>
+          <button onClick={() => setModalOpen(true)} className="btn-primary flex items-center gap-2 whitespace-nowrap"><Plus size={16} /> Rechnung erstellen</button>
         </div>
 
         {isLoading ? <LoadingSpinner /> : invoices?.length === 0 ? (
@@ -142,7 +142,35 @@ export function RechnungenPage() {
             <button onClick={() => setModalOpen(true)} className="btn-primary">Rechnung erstellen</button>
           } />
         ) : (
-          <div className="card overflow-hidden">
+          {/* Mobile cards */}
+          <div className="space-y-2 md:hidden">
+            {invoices?.map((inv) => (
+              <div key={inv.id} className="card p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="font-mono text-xs text-gray-500">{inv.nummer}</p>
+                    <p className="font-semibold text-gray-900 text-sm">{(inv.client as any)?.vorname} {(inv.client as any)?.nachname}</p>
+                    <p className="text-xs text-gray-400 truncate">{(inv.dossier as any)?.titel}</p>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="font-bold text-gray-900">{formatCHF(inv.betrag * (1 + inv.mwst / 100))}</p>
+                    <Badge className={`${invoiceStatusColor[inv.status]} mt-1`}>{invoiceStatusLabel[inv.status]}</Badge>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-xs text-gray-400">Fällig: {formatDate(inv.faelligkeitsdatum)}</p>
+                  <div className="flex gap-1">
+                    {inv.status === 'VERSENDET' && (
+                      <button onClick={() => updateMut.mutate({ id: inv.id, status: 'BEZAHLT' })} className="p-1.5 text-green-500 hover:bg-green-50 rounded"><CheckCircle size={14} /></button>
+                    )}
+                    <button onClick={() => deleteMut.mutate(inv.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded"><Trash2 size={13} /></button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Desktop table */}
+          <div className="card overflow-hidden hidden md:block">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100">
@@ -163,20 +191,13 @@ export function RechnungenPage() {
                     <td className="px-4 py-3 text-gray-500 truncate max-w-[160px]">{(inv.dossier as any)?.titel}</td>
                     <td className="px-4 py-3 text-right font-semibold text-gray-900">{formatCHF(inv.betrag * (1 + inv.mwst / 100))}</td>
                     <td className="px-4 py-3 text-center text-gray-500">{formatDate(inv.faelligkeitsdatum)}</td>
-                    <td className="px-4 py-3 text-center">
-                      <Badge className={invoiceStatusColor[inv.status]}>{invoiceStatusLabel[inv.status]}</Badge>
-                    </td>
+                    <td className="px-4 py-3 text-center"><Badge className={invoiceStatusColor[inv.status]}>{invoiceStatusLabel[inv.status]}</Badge></td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 justify-end">
                         {inv.status === 'VERSENDET' && (
-                          <button onClick={() => updateMut.mutate({ id: inv.id, status: 'BEZAHLT' })}
-                            className="p-1.5 text-green-500 hover:bg-green-50 rounded" title="Als bezahlt markieren">
-                            <CheckCircle size={14} />
-                          </button>
+                          <button onClick={() => updateMut.mutate({ id: inv.id, status: 'BEZAHLT' })} className="p-1.5 text-green-500 hover:bg-green-50 rounded"><CheckCircle size={14} /></button>
                         )}
-                        <button onClick={() => deleteMut.mutate(inv.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded">
-                          <Trash2 size={13} />
-                        </button>
+                        <button onClick={() => deleteMut.mutate(inv.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded"><Trash2 size={13} /></button>
                       </div>
                     </td>
                   </tr>

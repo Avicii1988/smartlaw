@@ -144,35 +144,21 @@ export function DossiersPage() {
               const overdue = d.frist && isDossierOverdue(d.frist) && d.status !== 'ABGESCHLOSSEN';
               const soon = d.frist && isDossierSoon(d.frist) && !isDossierOverdue(d.frist) && d.status !== 'ABGESCHLOSSEN';
               return (
-                <div key={d.id} className={`card p-4 flex items-center gap-4 hover:shadow-md transition-shadow group ${overdue ? 'border-red-200 bg-red-50/30' : soon ? 'border-amber-200 bg-amber-50/30' : ''}`}>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <Link to={`/dossiers/${d.id}`} className="font-semibold text-gray-900 hover:text-[#185FA5] text-sm truncate">
-                        {d.titel}
-                      </Link>
-                      {overdue && <AlertTriangle size={14} className="text-red-500 flex-shrink-0" />}
-                      {soon && <AlertTriangle size={14} className="text-amber-500 flex-shrink-0" />}
+                <div key={d.id} className={`card p-4 hover:shadow-md transition-shadow group ${overdue ? 'border-red-200 bg-red-50/30' : soon ? 'border-amber-200 bg-amber-50/30' : ''}`}>
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <Link to={`/dossiers/${d.id}`} className="font-semibold text-gray-900 hover:text-[#185FA5] text-sm">
+                          {d.titel}
+                        </Link>
+                        {overdue && <AlertTriangle size={14} className="text-red-500 flex-shrink-0" />}
+                        {soon && <AlertTriangle size={14} className="text-amber-500 flex-shrink-0" />}
+                      </div>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {d.client?.vorname} {d.client?.nachname}{d.client?.firma ? ` · ${d.client.firma}` : ''} · {d.anwalt?.vorname} {d.anwalt?.nachname}
+                      </p>
                     </div>
-                    <div className="flex items-center gap-3 mt-1">
-                      <span className="text-xs text-gray-400">
-                        {d.client?.vorname} {d.client?.nachname}{d.client?.firma ? ` · ${d.client.firma}` : ''}
-                      </span>
-                      <span className="text-xs text-gray-400">·</span>
-                      <span className="text-xs text-gray-400">{d.anwalt?.vorname} {d.anwalt?.nachname}</span>
-                      {d.frist && (
-                        <>
-                          <span className="text-xs text-gray-400">·</span>
-                          <span className={`text-xs flex items-center gap-1 ${overdue ? 'text-red-600 font-medium' : soon ? 'text-amber-600 font-medium' : 'text-gray-400'}`}>
-                            <Calendar size={11} /> {formatDate(d.frist)}
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <Badge className={rechtsgebietColor[d.rechtsgebiet]}>{rechtsgebietLabel[d.rechtsgebiet]}</Badge>
-                    <Badge className={dossierStatusColor[d.status]}>{dossierStatusLabel[d.status]}</Badge>
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-2">
+                    <div className="flex gap-1 flex-shrink-0">
                       <button onClick={() => setEditDossier(d)} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg">
                         <Edit2 size={14} />
                       </button>
@@ -180,6 +166,15 @@ export function DossiersPage() {
                         <Trash2 size={14} />
                       </button>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2 flex-wrap">
+                    <Badge className={rechtsgebietColor[d.rechtsgebiet]}>{rechtsgebietLabel[d.rechtsgebiet]}</Badge>
+                    <Badge className={dossierStatusColor[d.status]}>{dossierStatusLabel[d.status]}</Badge>
+                    {d.frist && (
+                      <span className={`text-xs flex items-center gap-1 ${overdue ? 'text-red-600 font-medium' : soon ? 'text-amber-600 font-medium' : 'text-gray-400'}`}>
+                        <Calendar size={11} /> {formatDate(d.frist)}
+                      </span>
+                    )}
                   </div>
                 </div>
               );

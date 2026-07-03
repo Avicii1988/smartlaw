@@ -124,9 +124,9 @@ export function LeistungenPage() {
       <Topbar title="Leistungserfassung" subtitle="Zeit erfassen und verwalten" />
       <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         {/* Timer card */}
-        <div className="card p-5 flex items-center gap-6">
+        <div className="card p-4 flex flex-wrap items-center gap-4">
           <div className="text-center">
-            <div className="text-3xl font-mono font-bold text-gray-900">{formatTimer(timer)}</div>
+            <div className="text-2xl md:text-3xl font-mono font-bold text-gray-900">{formatTimer(timer)}</div>
             <div className="text-xs text-gray-400 mt-1">Stoppuhr</div>
           </div>
           <div className="flex gap-2">
@@ -154,25 +154,25 @@ export function LeistungenPage() {
         {/* Summary */}
         <div className="grid grid-cols-3 gap-4">
           <div className="card p-4 text-center">
-            <p className="text-2xl font-bold text-gray-900">{formatHours(totalHours)}</p>
+            <p className="text-xl md:text-2xl font-bold text-gray-900">{formatHours(totalHours)}</p>
             <p className="text-xs text-gray-400 mt-1">Total Stunden</p>
           </div>
           <div className="card p-4 text-center">
-            <p className="text-2xl font-bold text-[#185FA5]">{formatHours(billableHours)}</p>
+            <p className="text-xl md:text-2xl font-bold text-[#185FA5]">{formatHours(billableHours)}</p>
             <p className="text-xs text-gray-400 mt-1">Verrechenbar</p>
           </div>
           <div className="card p-4 text-center">
-            <p className="text-2xl font-bold text-green-600">{formatCHF(totalCHF)}</p>
+            <p className="text-xl md:text-2xl font-bold text-green-600 truncate">{formatCHF(totalCHF)}</p>
             <p className="text-xs text-gray-400 mt-1">Honorar total</p>
           </div>
         </div>
 
         {/* Filters + Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <input type="date" className="input w-auto" value={filterDate} onChange={e => setFilterDate(e.target.value)} />
-          <button onClick={() => setFilterDate('')} className="text-sm text-gray-400 hover:text-gray-600">Zurücksetzen</button>
+          {filterDate && <button onClick={() => setFilterDate('')} className="text-sm text-gray-400 hover:text-gray-600">Zurücksetzen</button>}
           <div className="flex-1" />
-          <button onClick={() => setModalOpen(true)} className="btn-primary flex items-center gap-2">
+          <button onClick={() => setModalOpen(true)} className="btn-primary flex items-center gap-2 whitespace-nowrap">
             <Plus size={16} /> Leistung erfassen
           </button>
         </div>
@@ -183,7 +183,30 @@ export function LeistungenPage() {
             <button onClick={() => setModalOpen(true)} className="btn-primary">Leistung erfassen</button>
           } />
         ) : (
-          <div className="card overflow-hidden">
+          {/* Mobile cards */}
+          <div className="space-y-2 md:hidden">
+            {entries?.map((e: any) => (
+              <div key={e.id} className="card p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-900 text-sm">{e.taetigkeit}</p>
+                    <p className="text-xs text-gray-400 truncate">{e.dossier?.titel}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{formatDate(e.datum)}</p>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="font-bold text-gray-900">{formatHours(e.dauer)}</p>
+                    <p className="text-xs text-gray-500">{e.verrechenbar ? formatCHF(e.dauer * e.stundenansatz) : '–'}</p>
+                  </div>
+                </div>
+                <div className="flex justify-end gap-1 mt-2">
+                  <button onClick={() => setEditEntry(e)} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded"><Edit2 size={13} /></button>
+                  <button onClick={() => deleteMut.mutate(e.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded"><Trash2 size={13} /></button>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Desktop table */}
+          <div className="card overflow-hidden hidden md:block">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100">
