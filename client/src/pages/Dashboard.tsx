@@ -36,18 +36,32 @@ function KPICard({ icon: Icon, label, value, sub, color }: {
 }
 
 export function DashboardPage() {
-  const { data, isLoading } = useQuery<DashboardKPIs>({
+  const { data, isLoading, isError, refetch } = useQuery<DashboardKPIs>({
     queryKey: ['dashboard'],
     queryFn: () => api.get('/dashboard/kpis').then(r => r.data),
-    refetchInterval: 30000,
+    refetchInterval: 60000,
+    retry: 3,
+    retryDelay: 1500,
+    staleTime: 30000,
   });
 
   const { data: suggestions } = useQuery({
     queryKey: ['ai-suggestions'],
     queryFn: () => api.get('/ai/suggestions').then(r => r.data),
+    retry: 1,
+    staleTime: 60000,
   });
 
   if (isLoading) return <Layout><Topbar title="Dashboard" /><LoadingSpinner /></Layout>;
+  if (isError) return (
+    <Layout>
+      <Topbar title="Dashboard" />
+      <div className="flex flex-col items-center justify-center flex-1 gap-3 text-gray-400 p-8">
+        <p className="text-sm">Daten konnten nicht geladen werden.</p>
+        <button onClick={() => refetch()} className="btn-primary text-sm">Erneut versuchen</button>
+      </div>
+    </Layout>
+  );
 
   return (
     <Layout>
