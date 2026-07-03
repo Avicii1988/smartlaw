@@ -120,7 +120,7 @@ export function MandantenPage() {
   return (
     <Layout>
       <Topbar title="Mandanten" subtitle={`${clients?.length ?? 0} Mandanten`} />
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         {/* Toolbar */}
         <div className="flex items-center gap-3 mb-6">
           <div className="relative flex-1 max-w-sm">

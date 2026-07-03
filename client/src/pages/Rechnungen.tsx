@@ -117,7 +117,7 @@ export function RechnungenPage() {
   return (
     <Layout>
       <Topbar title="Rechnungen" subtitle={`${invoices?.length ?? 0} Rechnungen`} />
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         <div className="grid grid-cols-4 gap-4">
           {(['ENTWURF', 'VERSENDET', 'BEZAHLT', 'UEBERFAELLIG'] as InvoiceStatus[]).map(s => {
             const count = invoices?.filter(i => i.status === s).length || 0;

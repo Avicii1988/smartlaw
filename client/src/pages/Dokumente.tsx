@@ -64,7 +64,7 @@ export function DokumentePage() {
   return (
     <Layout>
       <Topbar title="Dokumente" subtitle="Dokumente und E-Signatur" />
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         <div className="flex items-center gap-3">
           <select className="input w-64" value={dossierId} onChange={e => setDossierId(e.target.value)}>
             <option value="">Alle Dossiers</option>

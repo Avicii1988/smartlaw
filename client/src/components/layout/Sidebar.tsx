@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard, Users, FolderOpen, Clock, FileText,
-  FileSignature, Bot, Package, Scale, LogOut, ChevronRight
+  FileSignature, Bot, Package, Scale, LogOut, ChevronRight, X
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth';
+import { useSidebar } from './SidebarContext';
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard', exact: true },
@@ -18,18 +19,31 @@ const navItems = [
 
 export function Sidebar() {
   const { user, logout } = useAuthStore();
+  const { open, close } = useSidebar();
 
   return (
-    <aside className="w-[220px] min-h-screen bg-[#0f172a] text-white flex flex-col fixed left-0 top-0 bottom-0 z-30">
+    <aside className={`
+      w-[220px] min-h-screen bg-[#0f172a] text-white flex flex-col
+      fixed left-0 top-0 bottom-0 z-30 transition-transform duration-300
+      ${open ? 'translate-x-0' : '-translate-x-full'}
+      lg:translate-x-0
+    `}>
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-5 py-5 border-b border-white/10">
-        <div className="w-8 h-8 bg-[#185FA5] rounded-lg flex items-center justify-center">
+        <div className="w-8 h-8 bg-[#185FA5] rounded-lg flex items-center justify-center flex-shrink-0">
           <Scale size={18} className="text-white" />
         </div>
-        <div>
+        <div className="flex-1 min-w-0">
           <div className="font-bold text-sm tracking-wide">smartlaw</div>
           <div className="text-[10px] text-white/50 uppercase tracking-widest">Kanzleisoftware</div>
         </div>
+        {/* Close button — mobile only */}
+        <button
+          onClick={close}
+          className="lg:hidden p-1 text-white/50 hover:text-white rounded"
+        >
+          <X size={18} />
+        </button>
       </div>
 
       {/* Nav */}
@@ -39,6 +53,7 @@ export function Sidebar() {
             key={to}
             to={to}
             end={exact}
+            onClick={close}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all group ${
                 isActive
@@ -57,7 +72,7 @@ export function Sidebar() {
       {/* User */}
       <div className="p-3 border-t border-white/10">
         <div className="flex items-center gap-3 px-2 py-2">
-          <div className="w-8 h-8 rounded-full bg-[#185FA5] flex items-center justify-center text-xs font-bold">
+          <div className="w-8 h-8 rounded-full bg-[#185FA5] flex items-center justify-center text-xs font-bold flex-shrink-0">
             {user?.vorname?.[0]}{user?.nachname?.[0]}
           </div>
           <div className="flex-1 min-w-0">

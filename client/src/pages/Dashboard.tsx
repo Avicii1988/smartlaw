@@ -21,8 +21,8 @@ function KPICard({ icon: Icon, label, value, sub, color }: {
   icon: any; label: string; value: string; sub?: string; color: string;
 }) {
   return (
-    <div className="card p-5 flex items-start gap-4">
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${color}`}>
+    <div className="card p-4 md:p-5 flex items-start gap-3 md:gap-4">
+      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${color}`}>
         <Icon size={22} />
       </div>
       <div>
@@ -51,16 +51,16 @@ export function DashboardPage() {
   return (
     <Layout>
       <Topbar title="Dashboard" subtitle={`Guten Morgen — ${new Date().toLocaleDateString('de-CH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`} />
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         {/* KPI Cards */}
-        <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <KPICard icon={FolderOpen} label="Aktive Dossiers" value={String(data?.aktiveDossiers ?? 0)} color="bg-blue-50 text-blue-600" />
           <KPICard icon={Clock} label="Stunden (Monat)" value={formatHours(data?.erfassteStunden ?? 0)} sub="erfasste Leistungen" color="bg-green-50 text-green-600" />
           <KPICard icon={Banknote} label="Offene Honorare" value={formatCHF(data?.offeneHonorare ?? 0)} sub="versendet + überfällig" color="bg-amber-50 text-amber-600" />
           <KPICard icon={FileSignature} label="Pend. Signaturen" value={String(data?.pendentSignaturen ?? 0)} sub="Dokumente ausstehend" color="bg-purple-50 text-purple-600" />
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
           {/* Recent Dossiers */}
           <div className="xl:col-span-2 card">
             <div className="flex items-center justify-between p-5 border-b border-gray-50">

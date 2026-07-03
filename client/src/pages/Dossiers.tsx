@@ -118,7 +118,7 @@ export function DossiersPage() {
   return (
     <Layout>
       <Topbar title="Dossiers" subtitle={`${dossiers?.length ?? 0} Dossiers`} />
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         <div className="flex flex-wrap items-center gap-3 mb-6">
           <select className="input w-auto" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
             <option value="">Alle Status</option>

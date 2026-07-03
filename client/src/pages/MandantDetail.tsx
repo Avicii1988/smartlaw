@@ -21,7 +21,7 @@ export function MandantDetailPage() {
   return (
     <Layout>
       <Topbar title={`${client.vorname} ${client.nachname}`} subtitle={client.firma || 'Privatperson'} />
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         <Link to="/mandanten" className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700">
           <ArrowLeft size={16} /> Zurück zu Mandanten
         </Link>

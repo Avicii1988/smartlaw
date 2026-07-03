@@ -22,7 +22,7 @@ export function PaketePage() {
   return (
     <Layout>
       <Topbar title="Rechtspakete" subtitle="Rechtsgebiet-spezifische Vorlagen und Checklisten" />
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         {isLoading ? <LoadingSpinner /> : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {packages?.map((pkg: any) => (
