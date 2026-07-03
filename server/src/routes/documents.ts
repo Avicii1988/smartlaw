@@ -7,8 +7,14 @@ import { authenticate, AuthRequest } from '../middleware/auth';
 const router = Router();
 router.use(authenticate);
 
+const uploadDir = process.env.VERCEL ? '/tmp/uploads' : './src/uploads';
+
 const storage = multer.diskStorage({
-  destination: './src/uploads',
+  destination: (req, file, cb) => {
+    const fs = require('fs');
+    fs.mkdirSync(uploadDir, { recursive: true });
+    cb(null, uploadDir);
+  },
   filename: (req, file, cb) => {
     const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
     cb(null, unique + path.extname(file.originalname));
