@@ -6,6 +6,7 @@ import path from 'path';
 
 dotenv.config();
 
+import { prisma } from './lib/prisma';
 import authRoutes from './routes/auth';
 import clientRoutes from './routes/clients';
 import dossierRoutes from './routes/dossiers';
@@ -30,7 +31,6 @@ if (!isVercel) {
 }
 
 app.get('/api/health', async (req, res) => {
-  const { prisma } = await import('./lib/prisma');
   let dbOk = false;
   let dbError = '';
   try {
