@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import {
-  LayoutDashboard, Users, FolderOpen, Clock, FileText,
+  LayoutDashboard, Users, FolderOpen, Timer, FileText,
   FileSignature, Bot, Package, Scale, LogOut, ChevronRight, X
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth';
@@ -10,7 +10,7 @@ const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard', exact: true },
   { to: '/mandanten', icon: Users, label: 'Mandanten' },
   { to: '/dossiers', icon: FolderOpen, label: 'Dossiers' },
-  { to: '/leistungen', icon: Clock, label: 'Leistungserfassung' },
+  { to: '/leistungen', icon: Timer, label: 'Leistungserfassung' },
   { to: '/rechnungen', icon: FileText, label: 'Rechnungen' },
   { to: '/dokumente', icon: FileSignature, label: 'Dokumente' },
   { to: '/ki-assistent', icon: Bot, label: 'KI-Assistent' },
@@ -87,6 +87,11 @@ export function Sidebar() {
           <LogOut size={15} />
           Abmelden
         </button>
+      </div>
+
+      {/* Footer */}
+      <div className="px-5 py-3 border-t border-white/5 text-center">
+        <p className="text-[10px] text-white/25 tracking-wide">smartlaw v1.0 · © 2025</p>
       </div>
     </aside>
   );
