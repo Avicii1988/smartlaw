@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Sidebar } from './Sidebar';
+import { Footer } from './Footer';
 import { SidebarProvider, useSidebar } from './SidebarContext';
 
 function LayoutInner({ children }: { children: ReactNode }) {
@@ -12,10 +13,7 @@ function LayoutInner({ children }: { children: ReactNode }) {
       <Sidebar />
       <main className="flex-1 lg:ml-[220px] flex flex-col min-h-screen w-full overflow-x-hidden">
         <div className="flex-1">{children}</div>
-        <footer className="lg:ml-0 border-t border-gray-100 px-6 py-3 flex items-center justify-between text-xs text-gray-400">
-          <span>smartlaw · Schweizer Kanzleisoftware</span>
-          <span>© 2025</span>
-        </footer>
+        <Footer />
       </main>
     </div>
   );

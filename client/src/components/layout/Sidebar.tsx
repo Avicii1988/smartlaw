@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import {
-  LayoutDashboard, Users, FolderOpen, Timer, FileText,
+  LayoutDashboard, Users, FolderOpen, Hourglass, FileText,
   FileSignature, Bot, Package, Scale, LogOut, ChevronRight, X
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth';
@@ -10,7 +10,7 @@ const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard', exact: true },
   { to: '/mandanten', icon: Users, label: 'Mandanten' },
   { to: '/dossiers', icon: FolderOpen, label: 'Dossiers' },
-  { to: '/leistungen', icon: Timer, label: 'Leistungserfassung' },
+  { to: '/leistungen', icon: Hourglass, label: 'Leistungserfassung' },
   { to: '/rechnungen', icon: FileText, label: 'Rechnungen' },
   { to: '/dokumente', icon: FileSignature, label: 'Dokumente' },
   { to: '/ki-assistent', icon: Bot, label: 'KI-Assistent' },
@@ -34,7 +34,7 @@ export function Sidebar() {
           <Scale size={18} className="text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-bold text-sm tracking-wide">smartlaw</div>
+          <div className="font-bold text-sm tracking-widest">SMARTLAW</div>
           <div className="text-[10px] text-white/50 uppercase tracking-widest">Kanzleisoftware</div>
         </div>
         {/* Close button — mobile only */}
@@ -91,7 +91,7 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="px-5 py-3 border-t border-white/5 text-center">
-        <p className="text-[10px] text-white/25 tracking-wide">smartlaw v1.0 · © 2025</p>
+        <p className="text-[10px] text-white/25 tracking-wide">SMARTLAW v1.0 · © 2026</p>
       </div>
     </aside>
   );
