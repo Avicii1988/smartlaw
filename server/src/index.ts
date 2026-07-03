@@ -29,6 +29,16 @@ if (!isVercel) {
   app.use('/uploads', express.static(path.resolve(isProd ? './uploads' : './src/uploads')));
 }
 
+app.get('/api/health', (req, res) => {
+  res.json({
+    ok: true,
+    hasDbUrl: !!process.env.DATABASE_URL,
+    dbUrlPrefix: process.env.DATABASE_URL?.substring(0, 40) ?? 'NOT SET',
+    hasJwt: !!process.env.JWT_SECRET,
+    nodeEnv: process.env.NODE_ENV,
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/dossiers', dossierRoutes);
