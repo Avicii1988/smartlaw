@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Scale, Mail, Phone, Globe, Shield, FileText, BookOpen } from 'lucide-react';
 
 export function Footer() {
@@ -35,14 +36,14 @@ export function Footer() {
             <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">Rechtliches</h4>
             <ul className="space-y-2">
               {[
-                { icon: FileText, label: 'Datenschutz' },
-                { icon: Shield, label: 'Sicherheit' },
-                { icon: BookOpen, label: 'AGB' },
-                { icon: FileText, label: 'Impressum' },
-              ].map(({ icon: Icon, label }) => (
+                { icon: FileText, label: 'Datenschutz', to: '/datenschutz' },
+                { icon: Shield, label: 'Sicherheit', to: '/sicherheit' },
+                { icon: BookOpen, label: 'AGB', to: '/agb' },
+                { icon: FileText, label: 'Impressum', to: '/impressum' },
+              ].map(({ icon: Icon, label, to }) => (
                 <li key={label} className="flex items-center gap-1.5">
                   <Icon size={11} className="text-gray-400" />
-                  <span className="text-xs text-gray-500 hover:text-[#185FA5] cursor-pointer transition-colors">{label}</span>
+                  <Link to={to} className="text-xs text-gray-500 hover:text-[#185FA5] transition-colors">{label}</Link>
                 </li>
               ))}
             </ul>

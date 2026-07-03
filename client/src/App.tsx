@@ -13,6 +13,10 @@ import { RechnungenPage } from './pages/Rechnungen';
 import { DokumentePage } from './pages/Dokumente';
 import { KIAssistentPage } from './pages/KIAssistent';
 import { PaketePage } from './pages/Pakete';
+import { DatenschutzPage } from './pages/legal/Datenschutz';
+import { AGBPage } from './pages/legal/AGB';
+import { SicherheitPage } from './pages/legal/Sicherheit';
+import { ImpressumPage } from './pages/legal/Impressum';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { token, user, setAuth } = useAuthStore();
@@ -51,6 +55,10 @@ export default function App() {
         <Route path="/dokumente" element={<ProtectedRoute><DokumentePage /></ProtectedRoute>} />
         <Route path="/ki-assistent" element={<ProtectedRoute><KIAssistentPage /></ProtectedRoute>} />
         <Route path="/pakete" element={<ProtectedRoute><PaketePage /></ProtectedRoute>} />
+        <Route path="/datenschutz" element={<ProtectedRoute><DatenschutzPage /></ProtectedRoute>} />
+        <Route path="/agb" element={<ProtectedRoute><AGBPage /></ProtectedRoute>} />
+        <Route path="/sicherheit" element={<ProtectedRoute><SicherheitPage /></ProtectedRoute>} />
+        <Route path="/impressum" element={<ProtectedRoute><ImpressumPage /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

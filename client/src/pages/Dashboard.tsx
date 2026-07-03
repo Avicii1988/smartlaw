@@ -54,7 +54,25 @@ export function DashboardPage() {
     enabled: !!data, // erst laden wenn KPIs da sind
   });
 
-  if (isLoading) return <Layout><Topbar title="Dashboard" /><LoadingSpinner /></Layout>;
+  if (isLoading) return (
+    <Layout>
+      <Topbar title="Dashboard" subtitle="Lade Daten…" />
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6 animate-pulse">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="card p-3 md:p-5 h-24 bg-gray-100 rounded-2xl" />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
+          <div className="xl:col-span-2 card h-64 bg-gray-100 rounded-2xl" />
+          <div className="space-y-4">
+            <div className="card h-28 bg-gray-100 rounded-2xl" />
+            <div className="card h-28 bg-gray-100 rounded-2xl" />
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
   if (isError) return (
     <Layout>
       <Topbar title="Dashboard" />
