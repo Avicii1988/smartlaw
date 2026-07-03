@@ -5,6 +5,7 @@ shared/node_modules/
 dist/
 server/dist/
 client/dist/
+server/src/generated/
 server/src/uploads/*
 !server/src/uploads/.gitkeep
 *.env.local
